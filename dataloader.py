@@ -136,19 +136,11 @@ def yield_data():
     freq  = rates["Frequency"].unique()
     return type_, freq, rates
 
-def _db_conn():
-    import psycopg2
-    from dotenv import load_dotenv
-    load_dotenv(os.path.join(BASE_DIR, '.env'))
-    return psycopg2.connect(
-        host=os.environ["PGHOST"], user=os.environ["PGUSER"],
-        password=os.environ["PGPASSWORD"], port=int(os.environ["PGPORT"]),
-        dbname=os.environ["PGDATABASE"], sslmode="require"
-    )
+# _db_conn() replaced by _get_db_conn() above
 
 def _fetch_prices(tickers):
     """Query daily market_prices for given tickers, return DataFrame with Ticker + OHLCV."""
-    conn = _db_conn()
+    conn = _get_db_conn()
     sql = """
         SELECT date AS "Date", ticker AS "Ticker",
                adj_close AS "Adj Close", close AS "Close",
@@ -203,7 +195,7 @@ def corp_oas_data():
     weekly  = _resample_prices(daily, 'W-FRI')
     monthly = _resample_prices(daily, 'ME')
 
-    conn = _db_conn()
+    conn = _get_db_conn()
     oas = pd.read_sql("""
         SELECT date AS "Date", fred_code AS "Code",
                value AS "Values", name AS "Name", rating AS "Rating"
@@ -233,15 +225,7 @@ def m2_data():
 @st.cache_data(ttl=3600)
 def pmi_data():
     """ISM Manufacturing PMI — independent DB query for PMI only."""
-    import psycopg2, warnings
-    from dotenv import load_dotenv
-    warnings.filterwarnings("ignore", category=UserWarning)
-    load_dotenv(os.path.join(BASE_DIR, '.env'))
-    conn = psycopg2.connect(
-        host=os.environ["PGHOST"], user=os.environ["PGUSER"],
-        password=os.environ["PGPASSWORD"], port=int(os.environ["PGPORT"]),
-        dbname=os.environ["PGDATABASE"], sslmode="require"
-    )
+    conn = _get_db_conn()
 
     level_df = pd.read_sql_query("""
         SELECT to_char(r.report_month, 'YYYY-MM-DD') AS "Date",
@@ -316,15 +300,7 @@ def pmi_data():
 @st.cache_data(ttl=3600)
 def nmi_data():
     """ISM Services NMI — independent DB query for NMI only."""
-    import psycopg2, warnings
-    from dotenv import load_dotenv
-    warnings.filterwarnings("ignore", category=UserWarning)
-    load_dotenv(os.path.join(BASE_DIR, '.env'))
-    conn = psycopg2.connect(
-        host=os.environ["PGHOST"], user=os.environ["PGUSER"],
-        password=os.environ["PGPASSWORD"], port=int(os.environ["PGPORT"]),
-        dbname=os.environ["PGDATABASE"], sslmode="require"
-    )
+    conn = _get_db_conn()
 
     level_df = pd.read_sql_query("""
         SELECT to_char(r.report_month, 'YYYY-MM-DD') AS "Date",
