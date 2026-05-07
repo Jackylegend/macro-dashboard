@@ -1,0 +1,14 @@
+name: Keep Streamlit Awake
+
+on:
+  schedule:
+    - cron: '0 9 */5 * *'  # every 5 days at 9am UTC
+  workflow_dispatch:         # allow manual trigger
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping app
+        run: |
+          curl -s -o /dev/null -w "%{http_code}" https://macro-dashboard-jackyliu.streamlit.app/
