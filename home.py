@@ -3,7 +3,7 @@ import streamlit as st
 # ── Placeholders — update these when ready ───────────────────────────────────
 LINKEDIN_URL  = "https://www.linkedin.com/in/jackyziyanliu"
 GITHUB_URL    = "https://github.com/Jackylegend/macro-dashboard"
-EMAIL         = "your.email@example.com"
+EMAIL         = "fanj.liu@outlook.com"
 BUYMEACOFFEE  = "https://buymeacoffee.com/jackylegend"
 
 # ── Custom CSS ────────────────────────────────────────────────────────────────
