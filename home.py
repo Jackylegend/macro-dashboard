@@ -4,7 +4,7 @@ import streamlit as st
 LINKEDIN_URL  = "https://www.linkedin.com/in/jackyziyanliu"
 GITHUB_URL    = "https://github.com/Jackylegend/macro-dashboard"
 EMAIL         = "your.email@example.com"
-BUYMEACOFFEE  = "https://www.buymeacoffee.com/your-username"
+BUYMEACOFFEE  = "https://buymeacoffee.com/jackylegend"
 
 # ── Custom CSS ────────────────────────────────────────────────────────────────
 st.markdown("""
