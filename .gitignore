@@ -1,0 +1,20 @@
+# Credentials — never commit
+.env
+../.env
+.streamlit/secrets.toml
+# .env.example is safe to commit (no real values)
+
+# Large source data files (not needed for code review)
+datasets/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Streamlit cache
+.streamlit/
+scratch_*.py
+scratch.py
